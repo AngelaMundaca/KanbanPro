@@ -1,0 +1,15 @@
+<h1>Dashboard de Tareas</h1>
+
+<form action="/nueva-tarjeta" method="POST">
+    <input type="text" name="taskTitle" placeholder="Nombre de la tarea" required>
+    <button type="submit">Agregar</button>
+</form>
+
+<div class="board">
+    {{#each tasks}}
+    <div class="card">
+        <h3>{{this.title}}</h3>
+        <p>Estado: {{this.status}}</p>
+    </div>
+    {{/each}}
+</div>
