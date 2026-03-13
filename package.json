@@ -6,15 +6,25 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "seed": "node seed.js",
+    "crud": "node test-crud.js"
   },
-  "keywords": ["node", "express", "hbs", "kanban"],
+  "keywords": [
+    "node",
+    "express",
+    "hbs",
+    "kanban"
+  ],
   "author": "Tu Nombre",
   "license": "ISC",
   "packageManager": "pnpm@10.29.3",
   "dependencies": {
+    "dotenv": "^17.3.1",
     "express": "^5.2.1",
-    "hbs": "^4.2.0"
+    "hbs": "^4.2.0",
+    "pg": "^8.20.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.8"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
