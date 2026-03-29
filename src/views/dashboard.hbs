@@ -1,15 +1,80 @@
-<h1>Dashboard de Tareas</h1>
+<!DOCTYPE html>
+<html lang="es">
 
-<form action="/nueva-tarjeta" method="POST">
-    <input type="text" name="taskTitle" placeholder="Nombre de la tarea" required>
-    <button type="submit">Agregar</button>
-</form>
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}} - KanbanPro</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
 
-<div class="board">
-    {{#each tasks}}
-    <div class="card">
-        <h3>{{this.title}}</h3>
-        <p>Estado: {{this.status}}</p>
-    </div>
-    {{/each}}
-</div>
+<body>
+    <nav class="nav">
+        <div class="logo">KanbanPro</div>
+        <div class="nav-links">
+            <span>Hola, {{usuario.nombre}}</span>
+            <a href="/logout">Cerrar sesión</a>
+        </div>
+    </nav>
+
+    <main class="contenedor">
+        <h1>Mis tableros</h1>
+
+        <section class="formulario-superior">
+            <h2>Crear tablero</h2>
+            <form action="/api/tableros" method="POST">
+                <input type="text" name="titulo" placeholder="Título del tablero" required>
+                <button type="submit">Crear tablero</button>
+            </form>
+        </section>
+
+        <section class="tableros-grid">
+            {{#each tableros}}
+            <article class="tablero">
+                <h2>{{titulo}}</h2>
+
+                <form action="/api/tableros/{{id}}/listas" method="POST" class="mini-form">
+                    <input type="text" name="titulo" placeholder="Nueva lista" required>
+                    <button type="submit">Agregar lista</button>
+                </form>
+
+                <div class="listas-grid">
+                    {{#each listas}}
+                    <div class="lista">
+                        <h3>{{titulo}}</h3>
+
+                        <form action="/api/listas/{{id}}/tarjetas" method="POST" class="mini-form">
+                            <input type="text" name="titulo" placeholder="Título tarjeta" required>
+                            <input type="text" name="descripcion" placeholder="Descripción">
+                            <select name="estado">
+                                <option value="pendiente">Pendiente</option>
+                                <option value="en progreso">En progreso</option>
+                                <option value="completada">Completada</option>
+                            </select>
+                            <button type="submit">Agregar tarjeta</button>
+                        </form>
+
+                        <div class="tarjetas">
+                            {{#each tarjetas}}
+                            <div class="tarjeta">
+                                <h4>{{titulo}}</h4>
+                                <p>{{descripcion}}</p>
+                                <span class="estado">{{estado}}</span>
+                            </div>
+                            {{else}}
+                            <p class="vacio">Sin tarjetas todavía</p>
+                            {{/each}}
+                        </div>
+                    </div>
+                    {{else}}
+                    <p class="vacio">Este tablero aún no tiene listas</p>
+                    {{/each}}
+                </div>
+            </article>
+            {{else}}
+            <p class="vacio">Aún no tienes tableros creados.</p>
+            {{/each}}
+        </section>
+    </main>
+</body>
+
+</html>

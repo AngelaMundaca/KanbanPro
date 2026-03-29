@@ -1,9 +1,38 @@
-<div class="auth-container">
-    <h2>Iniciar Sesión</h2>
-    <form>
-        <input type="email" placeholder="Correo electrónico" required>
-        <input type="password" placeholder="Contraseña" required>
-        <button type="submit">Entrar</button>
-    </form>
-    <p>¿No tienes cuenta? <a href="/register">Regístrate aquí</a></p>
-</div>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}} - KanbanPro</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="logo">KanbanPro</div>
+        <div class="nav-links">
+            <a href="/">Inicio</a>
+            <a href="/register">Registro</a>
+        </div>
+    </nav>
+
+    <main class="contenedor">
+        <section class="auth-box">
+            <h2>Iniciar sesión</h2>
+
+            {{#if error}}
+            <p class="mensaje-error">{{error}}</p>
+            {{/if}}
+
+            <form action="/auth/login" method="POST">
+                <input type="email" name="email" placeholder="Correo electrónico" required>
+                <input type="password" name="contrasena" placeholder="Contraseña" required>
+                <button type="submit">Entrar</button>
+            </form>
+
+            <p class="texto-centro">¿No tienes cuenta? <a href="/register">Regístrate aquí</a></p>
+        </section>
+    </main>
+</body>
+
+</html>

@@ -8,24 +8,25 @@
 </head>
 
 <body>
-    <header>
-        <nav>
-            <div class="logo">KanbanPro</div>
-            <ul>
-                <li><a href="/">Inicio</a></li>
-                <li><a href="/dashboard">Tablero</a></li>
-                <li><a href="/login">Login</a></li>
-            </ul>
-        </nav>
-    </header>
+    <nav class="nav">
+        <div class="logo">KanbanPro</div>
+        <div class="nav-links">
+            <a href="/">Inicio</a>
+            <a href="/login">Login</a>
+            <a href="/register">Registro</a>
+        </div>
+    </nav>
 
-    <main>
-        {{{body}}}
+    <main class="contenedor">
+        <section class="hero">
+            <h1>KanbanPro</h1>
+            <p>Gestiona tus tableros, listas y tarjetas con datos reales desde PostgreSQL.</p>
+            <div class="acciones">
+                <a class="boton" href="/register">Crear cuenta</a>
+                <a class="boton secundario" href="/login">Iniciar sesión</a>
+            </div>
+        </section>
     </main>
-
-    <footer>
-        <p>&copy; 2024 KanbanPro - Sprint 1 Prototipo</p>
-    </footer>
 </body>
 
 </html>

@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-    const Tarjeta = sequelize.define('Tarjeta', {
+    return sequelize.define('Tarjeta', {
         titulo: {
             type: DataTypes.STRING,
             allowNull: false
@@ -16,6 +16,4 @@ module.exports = (sequelize) => {
             defaultValue: 'pendiente'
         }
     });
-
-    return Tarjeta;
 };

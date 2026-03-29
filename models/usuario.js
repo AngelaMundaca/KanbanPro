@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-    const Usuario = sequelize.define('Usuario', {
+    return sequelize.define('Usuario', {
         nombre: {
             type: DataTypes.STRING,
             allowNull: false
@@ -13,8 +13,10 @@ module.exports = (sequelize) => {
             validate: {
                 isEmail: true
             }
+        },
+        contrasena: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     });
-
-    return Usuario;
 };

@@ -1,80 +1,49 @@
+require('dotenv').config();
+const bcrypt = require('bcryptjs');
 const { sequelize, Usuario, Tablero, Lista, Tarjeta } = require('./models');
 
-const poblarBaseDeDatos = async () => {
+const poblarDB = async () => {
     try {
         await sequelize.sync({ force: true });
-        console.log('✅ Tablas creadas correctamente');
+        console.log('Base de datos reiniciada');
 
+        // Hashear contraseñas
+        const pass1 = await bcrypt.hash('123456', 10);
+        const pass2 = await bcrypt.hash('123456', 10);
+
+        // Usuarios
         const usuarios = await Usuario.bulkCreate([
-            { nombre: 'David Torres', email: 'david@kanbanpro.com' },
-            { nombre: 'Dev Team', email: 'dev@kanbanpro.com' }
+            { nombre: 'David Torres', email: 'david@kanbanpro.com', contrasena: pass1 },
+            { nombre: 'Dev Team', email: 'dev@kanbanpro.com', contrasena: pass2 }
         ], { returning: true });
 
-        const [usuario1, usuario2] = usuarios;
-
+        // Tableros
         const tableros = await Tablero.bulkCreate([
-            { titulo: 'Desarrollo KanbanPro', usuarioId: usuario1.id },
-            { titulo: 'Campaña de Lanzamiento', usuarioId: usuario1.id },
-            { titulo: 'Marketing Q2', usuarioId: usuario2.id }
+            { titulo: 'Proyecto KanbanPro', usuarioId: usuarios[0].id },
+            { titulo: 'Marketing Q4', usuarioId: usuarios[1].id }
         ], { returning: true });
 
-        const tablero1 = tableros[0];
-        const tablero2 = tableros[1];
-        const tablero3 = tableros[2];
-
+        // Listas
         const listas = await Lista.bulkCreate([
-            { titulo: 'Backlog', tableroId: tablero1.id },
-            { titulo: 'En Progreso', tableroId: tablero1.id },
-            { titulo: 'Terminado', tableroId: tablero1.id },
-            { titulo: 'Ideas', tableroId: tablero2.id },
-            { titulo: 'Pendientes', tableroId: tablero3.id }
+            { titulo: 'Pendiente', tableroId: tableros[0].id },
+            { titulo: 'En Progreso', tableroId: tableros[0].id }
         ], { returning: true });
 
-        const backlog = listas[0];
-        const enProgreso = listas[1];
-        const terminado = listas[2];
-        const ideas = listas[3];
-        const pendientes = listas[4];
-
+        // Tarjetas
         await Tarjeta.bulkCreate([
             {
-                titulo: 'Implementar Auth JWT',
-                descripcion: 'Agregar autenticación segura al sistema',
+                titulo: 'Crear API',
+                descripcion: 'Desarrollar backend',
                 estado: 'pendiente',
-                listaId: backlog.id
-            },
-            {
-                titulo: 'Diseñar dashboard',
-                descripcion: 'Maquetar vista principal del tablero',
-                estado: 'en progreso',
-                listaId: enProgreso.id
-            },
-            {
-                titulo: 'Configurar proyecto',
-                descripcion: 'Preparar estructura inicial del proyecto',
-                estado: 'terminado',
-                listaId: terminado.id
-            },
-            {
-                titulo: 'Ideas para redes',
-                descripcion: 'Definir copies y conceptos visuales',
-                estado: 'pendiente',
-                listaId: ideas.id
-            },
-            {
-                titulo: 'Revisar métricas',
-                descripcion: 'Analizar rendimiento de campaña',
-                estado: 'pendiente',
-                listaId: pendientes.id
+                listaId: listas[0].id
             }
         ]);
 
-        console.log('✅ Base de datos poblada con datos de prueba');
+        console.log('Datos insertados correctamente');
         process.exit();
     } catch (error) {
-        console.error('❌ Error en seed:', error.message);
-        process.exit(1);
+        console.error(error);
     }
 };
 
-poblarBaseDeDatos();
+poblarDB();
