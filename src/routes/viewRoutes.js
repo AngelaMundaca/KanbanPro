@@ -9,6 +9,15 @@ router.get('/login', (req, res) => res.render('login'));
 router.get('/register', (req, res) => res.render('register')); // ← CORREGIDO
 
 // PROTEGIDO
-router.get('/dashboard', authMiddleware, vistasController.dashboard);
+router.get('/dashboard', (req, res) => {
+
+    const tareas = [
+        { titulo: "Aprender Node.js", estado: "Doing" },
+        { titulo: "Crear API", estado: "To Do" },
+        { titulo: "Desplegar en Vercel", estado: "Done" }
+    ];
+
+    res.render('dashboard', { tareas });
+});
 
 module.exports = router;
