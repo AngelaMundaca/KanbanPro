@@ -1,5 +1,14 @@
 # KanbanPro - Sprint 3
 
+---
+
+ **Demo en vivo:** https://kanban-pro-pi.vercel.app/
+ 
+
+---
+<img width="1536" height="1024" alt="KanbanPro" src="https://github.com/user-attachments/assets/193b1653-15ec-4d69-84f9-9b0c8f27d333" />
+
+
 Aplicación tipo tablero Kanban desarrollada con Node.js, Express, Handlebars, Sequelize y PostgreSQL.
 
 Este proyecto corresponde al Sprint 3, donde se implementa una API RESTful completa, autenticación con JWT y conexión de la interfaz con datos reales desde la base de datos.
